@@ -1,0 +1,17 @@
+const express = require('express');
+const { fetchProducts } = require('../productservice'); // Adjust path based on your structure
+const router = express.Router();
+
+// API route to fetch products
+router.get('/products', async (req, res) => {
+  const { query } = req.query; // Fetch query param from request
+  try {
+    const products = await fetchProducts(query); // Call product service to get data
+    res.json(products); // Send the fetched products as JSON response
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).json({ error: 'Failed to fetch products' });
+  }
+});
+
+module.exports = router;
